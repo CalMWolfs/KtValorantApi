@@ -1,22 +1,30 @@
 package dynamictypes
 
-abstract class DynamicType<T, E : Enum<E>>(
+abstract class DynamicType<T>(
     open val name: String
 ) {
     val registryName get() = name.uppercase()
 
     companion object {
-        fun <T : DynamicType<T, E>, E : Enum<E>> getFromRegistry(name: String, registry: Map<String, T>): T? {
-            return registry[name]
+        protected val registry: MutableMap<Class<*>, Map<String, Any>> = mutableMapOf()
+
+        @JvmStatic
+        @Suppress("UNCHECKED_CAST")
+        protected inline fun <reified T> getRegistry(): Map<String, T> {
+            return registry.getOrPut(T::class.java) { mutableMapOf() } as Map<String, T>
         }
 
-        fun <T : DynamicType<T, E>, E : Enum<E>> getFromRegistry(value: E, registry: Map<String, T>): T? {
-            return registry[value.name.uppercase()]
+        @JvmStatic
+        protected inline fun <reified T> getFromRegistry(name: String): T? {
+            return getRegistry<T>()[name]
         }
 
-        fun <T> addToRegistry(name: String, value: T, registry: MutableMap<String, T>) {
+        @JvmStatic
+        protected inline fun <reified T : DynamicType<T>> addToRegistry(value: DynamicType<T>) {
+            val registry = getRegistry<T>() as MutableMap<String, T>
+            val name = value.registryName
             if (!registry.containsKey(name)) {
-                registry[name] = value
+                registry[name] = value as T
             }
         }
     }
