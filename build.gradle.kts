@@ -8,10 +8,17 @@ version = "1.0.0"
 
 repositories {
     mavenCentral()
+    maven("https://jitpack.io") {
+        content {
+            includeGroupByRegex("com\\.github\\..*")
+        }
+    }
 }
 
 dependencies {
+    implementation(kotlin("stdlib"))
     implementation("com.google.code.gson:gson:2.11.0")
+    implementation("com.github.CalMWolfs:ValorantModelApi:1.0.2")
 }
 
 kotlin {
