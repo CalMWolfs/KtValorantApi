@@ -371,7 +371,7 @@ class KtValorantApi(private val apiKey: String) {
     @Throws(IOException::class)
     private inline fun <reified T> sendRequest(requestPath: String, params: Map<String, String> = mapOf()): T {
         val responseJsonObject = getRawJsonResponse(requestPath, params)
-        return GsonUtils.gson().fromJson(responseJsonObject.getAsJsonObject("data"), T::class.java)
+        return GsonUtils.gson.fromJson(responseJsonObject.getAsJsonObject("data"), T::class.java)
     }
 
     @Throws(IOException::class)
@@ -383,7 +383,7 @@ class KtValorantApi(private val apiKey: String) {
         val data = responseJsonObject.getAsJsonArray("data")
         val result = mutableListOf<T>()
         data.forEach {
-            result.add(GsonUtils.gson().fromJson(it, T::class.java))
+            result.add(GsonUtils.gson.fromJson(it, T::class.java))
         }
         return result
     }
@@ -439,12 +439,12 @@ class KtValorantApi(private val apiKey: String) {
         }
 
         val response = connection.inputStream.bufferedReader().use { it.readText() }
-        return GsonUtils.gson().fromJson(response, JsonObject::class.java)
+        return GsonUtils.gson.fromJson(response, JsonObject::class.java)
     }
 
     private fun getCodeAndMessage(connection: HttpURLConnection): Pair<Int, String> {
         val response = connection.errorStream.bufferedReader().use { it.readText() }
-        val json = GsonUtils.gson().fromJson(response, JsonObject::class.java)
+        val json = GsonUtils.gson.fromJson(response, JsonObject::class.java)
         val error = json.getAsJsonArray("errors")[0].asJsonObject
         return Pair(error.get("code").asInt, error.get("message").asString)
     }
