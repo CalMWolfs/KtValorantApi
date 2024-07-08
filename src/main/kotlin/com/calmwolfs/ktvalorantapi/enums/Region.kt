@@ -1,4 +1,4 @@
-package enums
+package com.calmwolfs.ktvalorantapi.enums
 
 import com.google.gson.TypeAdapter
 import com.google.gson.stream.JsonReader

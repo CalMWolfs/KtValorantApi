@@ -1,4 +1,4 @@
-package datatypes
+package com.calmwolfs.ktvalorantapi.datatypes
 
 data class SearchSize(val size: Int, val page: Int) {
     constructor(size: Int) : this(size, 1)

@@ -1,4 +1,4 @@
-package enums
+package com.calmwolfs.ktvalorantapi.enums
 
 import com.google.gson.TypeAdapter
 import com.google.gson.stream.JsonReader
@@ -29,17 +29,17 @@ enum class Language(val locale: String, val localeUrl: String, val displayName: 
     }
 
     companion object {
-        fun fromLocaleUrl(localeUrl: String): Language {
+        fun fromLocaleUrl(localeUrl: String): com.calmwolfs.ktvalorantapi.enums.Language {
             return entries.first { it.localeUrl == localeUrl }
         }
 
-        val typeAdapter: TypeAdapter<Language> = object : TypeAdapter<Language>() {
-            override fun write(writer: JsonWriter, value: Language) {
+        val typeAdapter: TypeAdapter<com.calmwolfs.ktvalorantapi.enums.Language> = object : TypeAdapter<com.calmwolfs.ktvalorantapi.enums.Language>() {
+            override fun write(writer: JsonWriter, value: com.calmwolfs.ktvalorantapi.enums.Language) {
                 writer.value(value.localeUrl)
             }
 
-            override fun read(reader: JsonReader): Language {
-                return fromLocaleUrl(reader.nextString())
+            override fun read(reader: JsonReader): com.calmwolfs.ktvalorantapi.enums.Language {
+                return com.calmwolfs.ktvalorantapi.enums.Language.Companion.fromLocaleUrl(reader.nextString())
             }
         }
     }

@@ -1,10 +1,10 @@
-package models
+package com.calmwolfs.ktvalorantapi.models
 
+import com.calmwolfs.ktvalorantapi.enums.Platform
 import com.calmwolfs.valorantmodelapi.enums.CompetitiveRankType
 import com.calmwolfs.valorantmodelapi.enums.MapType
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import enums.Platform
 
 data class QueueStatus(
     // todo use enum

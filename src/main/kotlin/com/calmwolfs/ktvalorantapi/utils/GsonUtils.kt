@@ -1,5 +1,8 @@
-package utils
+package com.calmwolfs.ktvalorantapi.utils
 
+import com.calmwolfs.ktvalorantapi.datatypes.PlayerName
+import com.calmwolfs.ktvalorantapi.enums.Platform
+import com.calmwolfs.ktvalorantapi.enums.Region
 import com.calmwolfs.valorantmodelapi.enums.AgentType
 import com.calmwolfs.valorantmodelapi.enums.CompetitiveRankType
 import com.calmwolfs.valorantmodelapi.enums.GamemodeType
@@ -13,9 +16,6 @@ import com.google.gson.TypeAdapter
 import com.google.gson.stream.JsonReader
 import com.google.gson.stream.JsonToken
 import com.google.gson.stream.JsonWriter
-import datatypes.PlayerName
-import enums.Platform
-import enums.Region
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 

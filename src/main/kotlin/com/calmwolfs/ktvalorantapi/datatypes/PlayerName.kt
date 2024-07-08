@@ -1,4 +1,4 @@
-package datatypes
+package com.calmwolfs.ktvalorantapi.datatypes
 
 import com.google.gson.TypeAdapter
 import com.google.gson.stream.JsonReader

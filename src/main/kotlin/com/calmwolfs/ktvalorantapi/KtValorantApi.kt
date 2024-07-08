@@ -1,28 +1,29 @@
+package com.calmwolfs.ktvalorantapi
+
+import com.calmwolfs.ktvalorantapi.datatypes.PlayerName
+import com.calmwolfs.ktvalorantapi.datatypes.SearchSize
+import com.calmwolfs.ktvalorantapi.enums.Platform
+import com.calmwolfs.ktvalorantapi.enums.Region
+import com.calmwolfs.ktvalorantapi.exceptions.AuthenticationException
+import com.calmwolfs.ktvalorantapi.exceptions.InternalServerException
+import com.calmwolfs.ktvalorantapi.exceptions.InvalidRequestException
+import com.calmwolfs.ktvalorantapi.exceptions.RateLimitException
+import com.calmwolfs.ktvalorantapi.exceptions.ResourceNotFoundException
+import com.calmwolfs.ktvalorantapi.models.Leaderboard
+import com.calmwolfs.ktvalorantapi.models.MmrHistory
+import com.calmwolfs.ktvalorantapi.models.QueueStatus
+import com.calmwolfs.ktvalorantapi.models.StoredMatch
+import com.calmwolfs.ktvalorantapi.models.StoredMmrHistory
+import com.calmwolfs.ktvalorantapi.models.ValorantAccount
+import com.calmwolfs.ktvalorantapi.models.ValorantMatch
+import com.calmwolfs.ktvalorantapi.models.ValorantNews
+import com.calmwolfs.ktvalorantapi.models.ValorantVersion
+import com.calmwolfs.ktvalorantapi.utils.GsonUtils
+import com.calmwolfs.ktvalorantapi.utils.TypeAdapters.apiName
 import com.calmwolfs.valorantmodelapi.enums.GamemodeType
 import com.calmwolfs.valorantmodelapi.enums.MapType
 import com.calmwolfs.valorantmodelapi.enums.SeasonType
 import com.google.gson.JsonObject
-import datatypes.PlayerName
-import datatypes.SearchSize
-import enums.Language
-import enums.Platform
-import enums.Region
-import exceptions.AuthenticationException
-import exceptions.InternalServerException
-import exceptions.InvalidRequestException
-import exceptions.RateLimitException
-import exceptions.ResourceNotFoundException
-import models.Leaderboard
-import models.MmrHistory
-import models.QueueStatus
-import models.StoredMatch
-import models.StoredMmrHistory
-import models.ValorantAccount
-import models.ValorantMatch
-import models.ValorantNews
-import models.ValorantVersion
-import utils.GsonUtils
-import utils.TypeAdapters.apiName
 import java.io.IOException
 import java.net.HttpURLConnection
 import java.net.URL
@@ -345,7 +346,7 @@ class KtValorantApi(private val apiKey: String) {
      * @throws IOException If an error occurs while sending the request
      */
     @Throws(IOException::class)
-    fun getValorantNews(language: Language): List<ValorantNews> {
+    fun getValorantNews(language: com.calmwolfs.ktvalorantapi.enums.Language): List<ValorantNews> {
         return sendRequestList<ValorantNews>("v1/website/${language.localeUrl}")
     }
 

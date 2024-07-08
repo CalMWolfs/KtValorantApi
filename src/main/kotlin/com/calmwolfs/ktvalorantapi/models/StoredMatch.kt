@@ -1,11 +1,11 @@
-package models
+package com.calmwolfs.ktvalorantapi.models
 
+import com.calmwolfs.ktvalorantapi.enums.Region
 import com.calmwolfs.valorantmodelapi.enums.AgentType
 import com.calmwolfs.valorantmodelapi.enums.CompetitiveRankType
 import com.calmwolfs.valorantmodelapi.enums.SeasonType
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import enums.Region
 
 data class StoredMatch(
     val meta: MapMetadata,

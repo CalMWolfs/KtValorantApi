@@ -1,4 +1,4 @@
-package exceptions
+package com.calmwolfs.ktvalorantapi.exceptions
 
 import java.io.IOException
 

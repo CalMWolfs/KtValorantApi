@@ -1,4 +1,4 @@
-package utils
+package com.calmwolfs.ktvalorantapi.utils
 
 import com.calmwolfs.valorantmodelapi.enums.AgentType
 import com.calmwolfs.valorantmodelapi.enums.CompetitiveRankType

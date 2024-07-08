@@ -1,4 +1,4 @@
-package datatypes
+package com.calmwolfs.ktvalorantapi.datatypes
 
 import com.google.gson.annotations.Expose
 

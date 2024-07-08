@@ -1,8 +1,7 @@
-package models
+package com.calmwolfs.ktvalorantapi.models
 
-import com.google.gson.annotations.Expose
+import com.calmwolfs.ktvalorantapi.enums.Region
 import com.google.gson.annotations.SerializedName
-import enums.Region
 
 data class ValorantVersion(
     val region: Region,

@@ -1,4 +1,4 @@
-package models
+package com.calmwolfs.ktvalorantapi.models
 
 import com.calmwolfs.valorantmodelapi.enums.CompetitiveRankType
 import com.calmwolfs.valorantmodelapi.enums.SeasonType

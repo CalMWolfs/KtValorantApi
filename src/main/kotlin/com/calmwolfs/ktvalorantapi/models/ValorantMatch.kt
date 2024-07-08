@@ -1,5 +1,8 @@
-package models
+package com.calmwolfs.ktvalorantapi.models
 
+import com.calmwolfs.ktvalorantapi.datatypes.Location
+import com.calmwolfs.ktvalorantapi.enums.Platform
+import com.calmwolfs.ktvalorantapi.enums.Region
 import com.calmwolfs.valorantmodelapi.enums.AgentType
 import com.calmwolfs.valorantmodelapi.enums.CompetitiveRankType
 import com.calmwolfs.valorantmodelapi.enums.GearType
@@ -8,9 +11,6 @@ import com.calmwolfs.valorantmodelapi.enums.WeaponType
 import com.google.gson.JsonElement
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import datatypes.Location
-import enums.Platform
-import enums.Region
 
 data class ValorantMatch(
     val metadata: GameMetadata,

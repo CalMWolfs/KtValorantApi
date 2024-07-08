@@ -1,9 +1,8 @@
-package models
+package com.calmwolfs.ktvalorantapi.models
 
-import com.google.gson.annotations.Expose
+import com.calmwolfs.ktvalorantapi.enums.Platform
+import com.calmwolfs.ktvalorantapi.enums.Region
 import com.google.gson.annotations.SerializedName
-import enums.Platform
-import enums.Region
 
 data class ValorantAccount(
     @SerializedName("puuid") val playerId: String,
