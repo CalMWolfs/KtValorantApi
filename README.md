@@ -4,7 +4,13 @@ Kotlin API Wrapper for Hendrik's Valorant API
 
 https://github.com/Henrik-3/unofficial-valorant-api v4.0.0
 
+A lot of the data models are provided through https://dash.valorant-api.com/
+
+These are provided by my other library: [ValorantModelApi](https://github.com/CalMWolfs/ValorantModelApi)
+
 This API Wrapper is a work in progress and is not yet complete, please make issues for any bugs.
+
+While this library can be used in Java, it is primarily designed for Kotlin.
 
 It is free to use and open source.
 
