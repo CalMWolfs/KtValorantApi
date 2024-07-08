@@ -16,6 +16,7 @@ object TypeAdapters {
 
     fun GamemodeType.apiName() = name.lowercase().replace("_", "")
 
+    // todo these type adapters dont currently support reading them
     val agentTypeAdapter = SimpleTypeAdapter(AgentType::name) { AgentType.fromId(getId(this)) }
     val gamemodeTypeAdapter = SimpleTypeAdapter(GamemodeType::name) { GamemodeType.fromId(getId(this)) }
     val seasonTypeAdapter = SimpleTypeAdapter(SeasonType::name) { SeasonType.fromId(getId(this)) }
