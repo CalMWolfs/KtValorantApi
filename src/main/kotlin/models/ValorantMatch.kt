@@ -1,13 +1,16 @@
 package models
 
+import com.calmwolfs.valorantmodelapi.enums.AgentType
+import com.calmwolfs.valorantmodelapi.enums.CompetitiveRankType
+import com.calmwolfs.valorantmodelapi.enums.GearType
+import com.calmwolfs.valorantmodelapi.enums.SeasonType
+import com.calmwolfs.valorantmodelapi.enums.WeaponType
 import com.google.gson.JsonElement
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import datatypes.Location
 import enums.Platform
-import enums.Rank
 import enums.Region
-import enums.Season
 
 data class ValorantMatch(
     @Expose val metadata: GameMetadata,
@@ -29,7 +32,7 @@ data class GameMetadata(
     @Expose @SerializedName("started_at") val startedAt: Long,
     @Expose @SerializedName("is_completed") val isCompleted: Boolean,
     @Expose val queue: QueueInfo,
-    @Expose val season: Season,
+    @Expose val season: SeasonType,
     @Expose val platform: Platform,
     //todo what is this
     @Expose val premier: JsonElement?,
@@ -57,21 +60,15 @@ data class PlayerInfo(
     @Expose @SerializedName("team_id") val team: String,
     @Expose val platform: Platform,
     @Expose @SerializedName("party_id") val partyId: String,
-    //todo enum
-    @Expose val agent: PlayerAgent,
+    @Expose val agent: AgentType,
     @Expose val stats: BasicPlayerStats,
     @Expose @SerializedName("ability_casts") val abilityCasts: AbilityCasts,
-    @Expose @SerializedName("tier") val rank: Rank,
+    @Expose @SerializedName("tier") val rank: CompetitiveRankType,
     @Expose val customisation: PlayerCustomisation,
     @Expose val accountLevel: Int,
     @Expose @SerializedName("session_playtime_in_ms") val sessionPlaytime: Int,
     @Expose val behavior: PlayerBehavior,
     @Expose val economy: PlayerEconomy,
-)
-
-data class PlayerAgent(
-    @Expose val id: String,
-    @Expose val name: String,
 )
 
 data class PlayerCustomisation(
@@ -182,21 +179,8 @@ data class PlayerStats(
 data class RoundEconomy(
     @Expose @SerializedName("loadout_value") val loadoutValue: Int,
     @Expose val remaining: Int,
-    //todo enum
-    @Expose val weapon: WeaponInfo,
-    // todo enum
-    @Expose val armor: ArmorInfo,
-)
-
-data class WeaponInfo(
-    @Expose val id: String,
-    @Expose val name: String,
-    @Expose val type: String,
-)
-
-data class ArmorInfo(
-    @Expose val id: String,
-    @Expose val name: String,
+    @Expose val weapon: WeaponType,
+    @Expose val armor: GearType,
 )
 
 data class DamageEvent(
@@ -215,8 +199,7 @@ data class KillEvent(
     @Expose val victim: BasicPlayerInfo,
     @Expose val assistants: List<BasicPlayerInfo>,
     @Expose val location: Location,
-    //todo enum
-    @Expose val weapon: WeaponInfo,
+    @Expose val weapon: WeaponType,
     @Expose @SerializedName("secondary_fire_mode") val secondaryFireMode: Boolean,
     @Expose @SerializedName("player_locations") val playerLocations: List<PlayerLocation>,
 )

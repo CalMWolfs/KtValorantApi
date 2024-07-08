@@ -1,10 +1,11 @@
 package models
 
+import com.calmwolfs.valorantmodelapi.enums.AgentType
+import com.calmwolfs.valorantmodelapi.enums.CompetitiveRankType
+import com.calmwolfs.valorantmodelapi.enums.SeasonType
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import enums.Rank
 import enums.Region
-import enums.Season
 
 data class StoredMatch(
     @Expose val meta: MapMetadata,
@@ -14,13 +15,12 @@ data class StoredMatch(
 
 data class MapMetadata(
     @Expose val id: String,
-    // todo enum for maps
     @Expose val map: MapInfo,
     @Expose val version: String,
     // todo enum for modes
     @Expose val mode: String,
     @Expose @SerializedName("started_at") val startedAt: Long,
-    @Expose val season: Season,
+    @Expose val season: SeasonType,
     @Expose val region: Region,
     @Expose val cluster: String,
 )
@@ -34,20 +34,14 @@ data class MatchStats(
     @Expose @SerializedName("puuid") val playerId: String,
     @Expose val team: String,
     @Expose val level: Int,
-    // todo enum and rename to agent?
-    @Expose val character: CharacterInfo,
-    @Expose @SerializedName("tier") val rank: Rank,
+    @Expose val character: AgentType,
+    @Expose @SerializedName("tier") val rank: CompetitiveRankType,
     @Expose val score: Int,
     @Expose val kills: Int,
     @Expose val deaths: Int,
     @Expose val assists: Int,
     @Expose val shots: ShotInfo,
     @Expose val damage: DamageInfo,
-)
-
-data class CharacterInfo(
-    @Expose val id: String,
-    @Expose val name: String,
 )
 
 data class ShotInfo(

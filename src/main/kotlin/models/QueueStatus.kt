@@ -1,9 +1,10 @@
 package models
 
+import com.calmwolfs.valorantmodelapi.enums.CompetitiveRankType
+import com.calmwolfs.valorantmodelapi.enums.MapType
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import enums.Platform
-import enums.Rank
 
 data class QueueStatus(
     // todo use enum
@@ -37,8 +38,8 @@ data class HighSkill(
 )
 
 data class SkillDisparity(
-    @Expose @SerializedName("tier") val rank: Rank,
-    @Expose @SerializedName("max_tier") val maxRank: Rank
+    @Expose @SerializedName("tier") val rank: CompetitiveRankType,
+    @Expose @SerializedName("max_tier") val maxRank: CompetitiveRankType
 )
 
 data class GameRules(
@@ -52,13 +53,7 @@ data class GameRules(
     @Expose @SerializedName("premier_mode") val premierMode: Boolean,
 )
 
-// todo use the enums
 data class QueueMapInfo(
-    @Expose val map: QueueMap,
+    @Expose val map: MapType,
     @Expose val enabled: Boolean,
-)
-
-data class QueueMap(
-    @Expose val id: String,
-    @Expose val name: String,
 )
