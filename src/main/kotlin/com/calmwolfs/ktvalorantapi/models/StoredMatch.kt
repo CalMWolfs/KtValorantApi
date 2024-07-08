@@ -3,6 +3,7 @@ package com.calmwolfs.ktvalorantapi.models
 import com.calmwolfs.ktvalorantapi.enums.Region
 import com.calmwolfs.valorantmodelapi.enums.AgentType
 import com.calmwolfs.valorantmodelapi.enums.CompetitiveRankType
+import com.calmwolfs.valorantmodelapi.enums.MapType
 import com.calmwolfs.valorantmodelapi.enums.SeasonType
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
@@ -15,7 +16,7 @@ data class StoredMatch(
 
 data class MapMetadata(
     val id: String,
-    val map: MapInfo,
+    val map: MapType,
     val version: String,
     // todo enum for modes
     val mode: String,
@@ -23,11 +24,6 @@ data class MapMetadata(
     val season: SeasonType,
     val region: Region,
     val cluster: String,
-)
-
-data class MapInfo(
-    val id: String,
-    val name: String,
 )
 
 data class MatchStats(

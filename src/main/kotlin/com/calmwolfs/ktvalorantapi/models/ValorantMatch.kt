@@ -6,6 +6,10 @@ import com.calmwolfs.ktvalorantapi.enums.Region
 import com.calmwolfs.valorantmodelapi.enums.AgentType
 import com.calmwolfs.valorantmodelapi.enums.CompetitiveRankType
 import com.calmwolfs.valorantmodelapi.enums.GearType
+import com.calmwolfs.valorantmodelapi.enums.LevelBorderType
+import com.calmwolfs.valorantmodelapi.enums.MapType
+import com.calmwolfs.valorantmodelapi.enums.PlayerCardType
+import com.calmwolfs.valorantmodelapi.enums.PlayerTitleType
 import com.calmwolfs.valorantmodelapi.enums.SeasonType
 import com.calmwolfs.valorantmodelapi.enums.WeaponType
 import com.google.gson.JsonElement
@@ -26,7 +30,7 @@ data class ValorantMatch(
 data class GameMetadata(
     @SerializedName("match_id") val matchId: String,
     // todo change around
-    val map: MapInfo,
+    val map: MapType,
     @SerializedName("game_version") val gameVersion: String,
     @SerializedName("game_length_in_ms") val gameLength: Int,
     @SerializedName("started_at") val startedAt: Long,
@@ -64,7 +68,7 @@ data class PlayerInfo(
     @Expose val stats: BasicPlayerStats,
     @Expose @SerializedName("ability_casts") val abilityCasts: AbilityCasts,
     @Expose @SerializedName("tier") val rank: CompetitiveRankType,
-    @Expose val customisation: PlayerCustomisation,
+    @Expose val customization: PlayerCustomisation,
     @Expose val accountLevel: Int,
     @Expose @SerializedName("session_playtime_in_ms") val sessionPlaytime: Int,
     @Expose val behavior: PlayerBehavior,
@@ -72,9 +76,9 @@ data class PlayerInfo(
 )
 
 data class PlayerCustomisation(
-    @Expose val card: String,
-    @Expose val title: String,
-    @Expose @SerializedName("preferred_level_border") val preferredLevelBorder: String?,
+    @Expose val card: PlayerCardType,
+    @Expose val title: PlayerTitleType,
+    @Expose @SerializedName("preferred_level_border") val preferredLevelBorder: LevelBorderType?,
 )
 
 data class PlayerBehavior(

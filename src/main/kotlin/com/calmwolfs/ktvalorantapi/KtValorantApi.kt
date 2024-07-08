@@ -397,11 +397,12 @@ class KtValorantApi(private val apiKey: String) {
 
     @Throws(IOException::class)
     private fun getRawJsonResponse(requestPath: String, params: Map<String, String> = mapOf()): JsonObject {
+        val fixedPath = requestPath.replace(" ", "%20")
         val url = if (params.isEmpty()) {
-            "$baseUrl/$requestPath"
+            "$baseUrl/$fixedPath"
         } else {
             val parameters = params.map { "${it.key}=${it.value}" }.joinToString("&")
-            "$baseUrl/$requestPath?$parameters"
+            "$baseUrl/$fixedPath?$parameters"
         }
 
         val connection = URL(url).openConnection() as HttpURLConnection

@@ -2,6 +2,8 @@ package com.calmwolfs.ktvalorantapi.models
 
 import com.calmwolfs.ktvalorantapi.enums.Platform
 import com.calmwolfs.ktvalorantapi.enums.Region
+import com.calmwolfs.valorantmodelapi.enums.PlayerCardType
+import com.calmwolfs.valorantmodelapi.enums.PlayerTitleType
 import com.google.gson.annotations.SerializedName
 
 data class ValorantAccount(
@@ -10,8 +12,8 @@ data class ValorantAccount(
     @SerializedName("account_level") val accountLevel: Int,
     val name: String,
     val tag: String,
-    val card: String,
-    val title: String,
+    val card: PlayerCardType,
+    val title: PlayerTitleType,
     val platforms: List<Platform>,
     @SerializedName("updated_at") val updatedAt: Long,
 )
