@@ -23,7 +23,6 @@ object GsonUtils {
 
     val gson: Gson by lazy {
         GsonBuilder().setPrettyPrinting()
-            .excludeFieldsWithoutExposeAnnotation()
             .registerTypeAdapter(AgentType::class.java, TypeAdapters.agentTypeAdapter.nullSafe())
             .registerTypeAdapter(GamemodeType::class.java, TypeAdapters.gamemodeTypeAdapter.nullSafe())
             .registerTypeAdapter(CompetitiveRankType::class.java, TypeAdapters.competitiveRankTypeAdapter.nullSafe())
@@ -31,8 +30,6 @@ object GsonUtils {
             .registerTypeAdapter(MapType::class.java, TypeAdapters.mapTypeAdapter.nullSafe())
             .registerTypeAdapter(WeaponType::class.java, TypeAdapters.weaponTypeAdapter.nullSafe())
             .registerTypeAdapter(GearType::class.java, TypeAdapters.gearTypeAdapter.nullSafe())
-
-
             .registerTypeAdapter(Region::class.java, Region.typeAdapter.nullSafe())
             .registerTypeAdapter(Platform::class.java, Platform.typeAdapter.nullSafe())
             .registerTypeAdapter(PlayerName::class.java, PlayerName.typeAdapter.nullSafe())

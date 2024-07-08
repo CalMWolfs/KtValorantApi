@@ -13,31 +13,31 @@ import enums.Platform
 import enums.Region
 
 data class ValorantMatch(
-    @Expose val metadata: GameMetadata,
-    @Expose val players: List<PlayerInfo>,
+    val metadata: GameMetadata,
+    val players: List<PlayerInfo>,
     // todo work out what data structure these are
-    @Expose val observers: List<JsonElement>,
-    @Expose val coaches: List<JsonElement>,
-    @Expose val teams: List<TeamInfo>,
-    @Expose val rounds: List<GameRound>,
-    @Expose val kills: List<KillEvent>,
+    val observers: List<JsonElement>,
+    val coaches: List<JsonElement>,
+    val teams: List<TeamInfo>,
+    val rounds: List<GameRound>,
+    val kills: List<KillEvent>,
 )
 
 data class GameMetadata(
-    @Expose @SerializedName("match_id") val matchId: String,
+    @SerializedName("match_id") val matchId: String,
     // todo change around
-    @Expose val map: MapInfo,
-    @Expose @SerializedName("game_version") val gameVersion: String,
-    @Expose @SerializedName("game_length_in_ms") val gameLength: Int,
-    @Expose @SerializedName("started_at") val startedAt: Long,
-    @Expose @SerializedName("is_completed") val isCompleted: Boolean,
-    @Expose val queue: QueueInfo,
-    @Expose val season: SeasonType,
-    @Expose val platform: Platform,
+    val map: MapInfo,
+    @SerializedName("game_version") val gameVersion: String,
+    @SerializedName("game_length_in_ms") val gameLength: Int,
+    @SerializedName("started_at") val startedAt: Long,
+    @SerializedName("is_completed") val isCompleted: Boolean,
+    val queue: QueueInfo,
+    val season: SeasonType,
+    val platform: Platform,
     //todo what is this
-    @Expose val premier: JsonElement?,
-    @Expose @SerializedName("party_rr_penaltys") val partyPenalties: List<RankingPenalty>,
-    @Expose val region: Region,
+    val premier: JsonElement?,
+    @SerializedName("party_rr_penaltys") val partyPenalties: List<RankingPenalty>,
+    val region: Region,
     @Expose val cluster: String,
 )
 

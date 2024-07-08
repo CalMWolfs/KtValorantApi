@@ -5,11 +5,11 @@ import com.google.gson.annotations.SerializedName
 import enums.Region
 
 data class ValorantVersion(
-    @Expose val region: Region,
-    @Expose val branch: String,
-    @Expose @SerializedName("build_date") val buildDate: String,
-    @Expose @SerializedName("build_ver") val buildVersion: String,
-    @Expose @SerializedName("last_checked") val lastChecked: Long,
-    @Expose val version: String,
-    @Expose @SerializedName("version_for_api") val apiVersion: String,
+    val region: Region,
+    val branch: String,
+    @SerializedName("build_date") val buildDate: String,
+    @SerializedName("build_ver") val buildVersion: String,
+    @SerializedName("last_checked") val lastChecked: Long,
+    val version: String,
+    @SerializedName("version_for_api") val apiVersion: String,
 )

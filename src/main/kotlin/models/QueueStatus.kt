@@ -8,17 +8,17 @@ import enums.Platform
 
 data class QueueStatus(
     // todo use enum
-    @Expose val mode: String,
-    @Expose @SerializedName("mode_id") val modeId: String,
-    @Expose val enabled: Boolean,
-    @Expose @SerializedName("team_size") val teamSize: Int,
-    @Expose @SerializedName("number_of_teams") val numberOfTeams: Int,
-    @Expose @SerializedName("party_size") val partySize: PartySize,
-    @Expose @SerializedName("high_skill") val highSkill: HighSkill,
-    @Expose val ranked: Boolean,
-    @Expose val tournament: Boolean,
-    @Expose @SerializedName("skill_disparity") val skillDisparity: List<SkillDisparity>,
-    @Expose @SerializedName("required_account_level") val requiredAccountLevel: Int,
+    val mode: String,
+    @SerializedName("mode_id") val modeId: String,
+    val enabled: Boolean,
+    @SerializedName("team_size") val teamSize: Int,
+    @SerializedName("number_of_teams") val numberOfTeams: Int,
+    @SerializedName("party_size") val partySize: PartySize,
+    @SerializedName("high_skill") val highSkill: HighSkill,
+    val ranked: Boolean,
+    val tournament: Boolean,
+    @SerializedName("skill_disparity") val skillDisparity: List<SkillDisparity>,
+    @SerializedName("required_account_level") val requiredAccountLevel: Int,
     @Expose @SerializedName("game_rules") val gameRules: GameRules,
     @Expose val platforms: List<Platform>,
     @Expose val maps: List<QueueMapInfo>

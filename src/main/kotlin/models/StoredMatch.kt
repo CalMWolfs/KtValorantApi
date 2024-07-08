@@ -8,37 +8,37 @@ import com.google.gson.annotations.SerializedName
 import enums.Region
 
 data class StoredMatch(
-    @Expose val meta: MapMetadata,
-    @Expose val stats: MatchStats,
-    @Expose val teams: TeamsInfo,
+    val meta: MapMetadata,
+    val stats: MatchStats,
+    val teams: TeamsInfo,
 )
 
 data class MapMetadata(
-    @Expose val id: String,
-    @Expose val map: MapInfo,
-    @Expose val version: String,
+    val id: String,
+    val map: MapInfo,
+    val version: String,
     // todo enum for modes
-    @Expose val mode: String,
-    @Expose @SerializedName("started_at") val startedAt: Long,
-    @Expose val season: SeasonType,
-    @Expose val region: Region,
-    @Expose val cluster: String,
+    val mode: String,
+    @SerializedName("started_at") val startedAt: Long,
+    val season: SeasonType,
+    val region: Region,
+    val cluster: String,
 )
 
 data class MapInfo(
-    @Expose val id: String,
-    @Expose val name: String,
+    val id: String,
+    val name: String,
 )
 
 data class MatchStats(
-    @Expose @SerializedName("puuid") val playerId: String,
-    @Expose val team: String,
-    @Expose val level: Int,
-    @Expose val character: AgentType,
-    @Expose @SerializedName("tier") val rank: CompetitiveRankType,
-    @Expose val score: Int,
-    @Expose val kills: Int,
-    @Expose val deaths: Int,
+    @SerializedName("puuid") val playerId: String,
+    val team: String,
+    val level: Int,
+    val character: AgentType,
+    @SerializedName("tier") val rank: CompetitiveRankType,
+    val score: Int,
+    val kills: Int,
+    val deaths: Int,
     @Expose val assists: Int,
     @Expose val shots: ShotInfo,
     @Expose val damage: DamageInfo,
