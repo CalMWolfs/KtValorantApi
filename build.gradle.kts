@@ -1,4 +1,5 @@
 plugins {
+    java
     kotlin("jvm") version "1.9.23"
 }
 
@@ -7,11 +8,17 @@ version = "1.0.0"
 
 repositories {
     mavenCentral()
+    maven("https://jitpack.io") {
+        content {
+            includeGroupByRegex("com\\.github\\..*")
+        }
+    }
 }
 
 dependencies {
+    implementation(kotlin("stdlib"))
     implementation("com.google.code.gson:gson:2.11.0")
-    testImplementation(kotlin("test"))
+    implementation("com.github.CalMWolfs:ValorantModelApi:1.2.2")
 }
 
 kotlin {

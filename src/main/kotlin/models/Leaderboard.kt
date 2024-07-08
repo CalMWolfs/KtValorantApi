@@ -1,8 +1,8 @@
 package models
 
+import com.calmwolfs.valorantmodelapi.enums.CompetitiveRankType
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import enums.Rank
 
 data class Leaderboard(
     @Expose @SerializedName("updated_at") val updatedAt: Long,
@@ -11,7 +11,7 @@ data class Leaderboard(
 )
 
 data class RankThreshold(
-    @Expose @SerializedName("tier") val rank: Rank,
+    @Expose @SerializedName("tier") val rank: CompetitiveRankType,
     @Expose @SerializedName("start_index") val startIndex: Int,
     @Expose val threshold: Int,
 )
@@ -28,5 +28,5 @@ data class LeaderboardPlayer(
     @Expose @SerializedName("rr") val rankedRating: Int,
     @Expose val wins: Int,
     @Expose @SerializedName("updated_at") val updatedAt: Long,
-    @Expose @SerializedName("tier") val rank: Rank,
+    @Expose @SerializedName("tier") val rank: CompetitiveRankType,
 )

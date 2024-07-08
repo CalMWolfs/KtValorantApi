@@ -1,12 +1,12 @@
+import com.calmwolfs.valorantmodelapi.enums.GamemodeType
+import com.calmwolfs.valorantmodelapi.enums.MapType
+import com.calmwolfs.valorantmodelapi.enums.SeasonType
 import com.google.gson.JsonObject
 import datatypes.PlayerName
 import datatypes.SearchSize
-import enums.GameMode
 import enums.Language
 import enums.Platform
 import enums.Region
-import enums.Season
-import enums.ValorantMap
 import exceptions.AuthenticationException
 import exceptions.InternalServerException
 import exceptions.InvalidRequestException
@@ -22,6 +22,7 @@ import models.ValorantMatch
 import models.ValorantNews
 import models.ValorantVersion
 import utils.GsonUtils
+import utils.TypeAdapters.apiName
 import java.io.IOException
 import java.net.HttpURLConnection
 import java.net.URL
@@ -75,10 +76,10 @@ class KtValorantApi(private val apiKey: String) {
         region: Region,
         platform: Platform,
         searchSize: SearchSize? = null,
-        season: Season? = null
+        season: SeasonType? = null
     ): Leaderboard {
         val params = searchSize?.params ?: mutableMapOf()
-        season?.let { params["short_season"] = it.shortName }
+        season?.let { params["season_id"] = it.uuid }
 
         return sendRequest<Leaderboard>("v3/leaderboard/${region.serializedName}/${platform.serializedName}", params)
     }
@@ -98,11 +99,11 @@ class KtValorantApi(private val apiKey: String) {
         region: Region,
         platform: Platform,
         playerName: PlayerName,
-        season: Season? = null
+        season: SeasonType? = null
     ): Leaderboard {
         val params = mutableMapOf<String, String>()
         params.putAll(playerName.params)
-        season?.let { params["short_season"] = it.shortName }
+        season?.let { params["season_id"] = it.uuid }
 
         return sendRequest<Leaderboard>("v3/leaderboard/${region.serializedName}/${platform.serializedName}", params)
     }
@@ -118,10 +119,15 @@ class KtValorantApi(private val apiKey: String) {
      * @throws IOException If an error occurs while sending the request
      */
     @Throws(IOException::class)
-    fun getLeaderboardById(region: Region, platform: Platform, playerId: String, season: Season? = null): Leaderboard {
+    fun getLeaderboardById(
+        region: Region,
+        platform: Platform,
+        playerId: String,
+        season: SeasonType? = null
+    ): Leaderboard {
         val params = mutableMapOf<String, String>()
         params["puuid"] = playerId
-        season?.let { params["short_season"] = it.shortName }
+        season?.let { params["season_id"] = it.uuid }
 
         return sendRequest<Leaderboard>(
             "v3/by-puuid/leaderboard/${region.serializedName}/${platform.serializedName}/$playerId",
@@ -145,12 +151,12 @@ class KtValorantApi(private val apiKey: String) {
         region: Region,
         playerName: PlayerName,
         searchSize: SearchSize? = null,
-        gameMode: GameMode? = null,
-        map: ValorantMap? = null
+        gameMode: GamemodeType? = null,
+        map: MapType? = null
     ): List<StoredMatch> {
         val params = searchSize?.params ?: mutableMapOf()
-        gameMode?.let { params["mode"] = it.apiName }
-        map?.let { params["map"] = it.mapName }
+        gameMode?.let { params["mode"] = it.apiName() }
+        map?.let { params["map"] = it.displayName }
         return sendRequestList<StoredMatch>(
             "v1/stored-matches/${region.serializedName}/${playerName.name}/${playerName.tag}",
             params
@@ -173,12 +179,12 @@ class KtValorantApi(private val apiKey: String) {
         region: Region,
         playerId: String,
         searchSize: SearchSize? = null,
-        gameMode: GameMode? = null,
-        map: ValorantMap? = null
+        gameMode: GamemodeType? = null,
+        map: MapType? = null
     ): List<StoredMatch> {
         val params = searchSize?.params ?: mutableMapOf()
-        gameMode?.let { params["mode"] = it.apiName }
-        map?.let { params["map"] = it.mapName }
+        gameMode?.let { params["mode"] = it.apiName() }
+        map?.let { params["map"] = it.displayName }
         return sendRequestList<StoredMatch>("v1/by-puuid/stored-matches/${region.serializedName}/$playerId", params)
     }
 
@@ -277,12 +283,12 @@ class KtValorantApi(private val apiKey: String) {
         platform: Platform,
         playerName: PlayerName,
         searchSize: SearchSize = SearchSize(10),
-        gameMode: GameMode? = null,
-        map: ValorantMap? = null
+        gameMode: GamemodeType? = null,
+        map: MapType? = null
     ): List<ValorantMatch> {
         val params = searchSize.params
-        gameMode?.let { params["mode"] = it.apiName }
-        map?.let { params["map"] = it.mapName }
+        gameMode?.let { params["mode"] = it.apiName() }
+        map?.let { params["map"] = it.displayName }
         return sendRequestList<ValorantMatch>(
             "v4/matches/${region.serializedName}/${platform.serializedName}/${playerName.name}/${playerName.tag}",
             params
@@ -307,12 +313,12 @@ class KtValorantApi(private val apiKey: String) {
         platform: Platform,
         playerId: String,
         searchSize: SearchSize = SearchSize(10),
-        gameMode: GameMode? = null,
-        map: ValorantMap? = null
+        gameMode: GamemodeType? = null,
+        map: MapType? = null
     ): List<ValorantMatch> {
         val params = searchSize.params
-        gameMode?.let { params["mode"] = it.apiName }
-        map?.let { params["map"] = it.mapName }
+        gameMode?.let { params["mode"] = it.apiName() }
+        map?.let { params["map"] = it.displayName }
         return sendRequestList<ValorantMatch>(
             "v4/by-puuid/matches/${region.serializedName}/${platform.serializedName}/$playerId",
             params
@@ -371,7 +377,7 @@ class KtValorantApi(private val apiKey: String) {
     @Throws(IOException::class)
     private inline fun <reified T> sendRequest(requestPath: String, params: Map<String, String> = mapOf()): T {
         val responseJsonObject = getRawJsonResponse(requestPath, params)
-        return GsonUtils.gson().fromJson(responseJsonObject.getAsJsonObject("data"), T::class.java)
+        return GsonUtils.gson.fromJson(responseJsonObject.getAsJsonObject("data"), T::class.java)
     }
 
     @Throws(IOException::class)
@@ -383,7 +389,7 @@ class KtValorantApi(private val apiKey: String) {
         val data = responseJsonObject.getAsJsonArray("data")
         val result = mutableListOf<T>()
         data.forEach {
-            result.add(GsonUtils.gson().fromJson(it, T::class.java))
+            result.add(GsonUtils.gson.fromJson(it, T::class.java))
         }
         return result
     }
@@ -439,12 +445,12 @@ class KtValorantApi(private val apiKey: String) {
         }
 
         val response = connection.inputStream.bufferedReader().use { it.readText() }
-        return GsonUtils.gson().fromJson(response, JsonObject::class.java)
+        return GsonUtils.gson.fromJson(response, JsonObject::class.java)
     }
 
     private fun getCodeAndMessage(connection: HttpURLConnection): Pair<Int, String> {
         val response = connection.errorStream.bufferedReader().use { it.readText() }
-        val json = GsonUtils.gson().fromJson(response, JsonObject::class.java)
+        val json = GsonUtils.gson.fromJson(response, JsonObject::class.java)
         val error = json.getAsJsonArray("errors")[0].asJsonObject
         return Pair(error.get("code").asInt, error.get("message").asString)
     }

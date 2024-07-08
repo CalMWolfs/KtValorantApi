@@ -1,11 +1,11 @@
 package models
 
+import com.calmwolfs.valorantmodelapi.enums.CompetitiveRankType
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import enums.Rank
 
 data class MmrHistory(
-    @Expose @SerializedName("currenttier") val currentTier: Rank,
+    @Expose @SerializedName("currenttier") val currentTier: CompetitiveRankType,
     @Expose @SerializedName("match_id") val matchId: String,
     @Expose val map: MapInfo,
     @Expose @SerializedName("season_id") val seasonId: String,
