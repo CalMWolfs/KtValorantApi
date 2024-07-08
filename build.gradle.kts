@@ -1,6 +1,7 @@
 plugins {
     java
     kotlin("jvm") version "1.9.23"
+    `maven-publish`
 }
 
 group = "com.calmwolfs.ktvalorantapi"
@@ -23,4 +24,12 @@ dependencies {
 
 kotlin {
     jvmToolchain(17)
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            from(components["java"])
+        }
+    }
 }

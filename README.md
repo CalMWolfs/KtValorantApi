@@ -28,6 +28,21 @@ dependencies {
 }
 ```
 
+```maven
+	<repositories>
+		<repository>
+		    <id>jitpack.io</id>
+		    <url>https://jitpack.io</url>
+		</repository>
+	</repositories>
+
+	<dependency>
+	    <groupId>com.github.CalMWolfs</groupId>
+	    <artifactId>ValorantModelApi</artifactId>
+	    <version>1.0.0</version>
+	</dependency>
+```
+
 ## Introduction
 
 The api requests are not threaded, so you will need to set that up yourself.

@@ -405,6 +405,7 @@ class KtValorantApi(private val apiKey: String) {
         }
 
         val connection = URL(url).openConnection() as HttpURLConnection
+        // todo remove println
         println("connecting to $url")
 
         connection.requestMethod = "GET"
