@@ -38,7 +38,7 @@ import java.io.IOException
 
 class KtValorantApi(private val apiKey: String) {
 
-    private val projectVersion = "1.0.1"
+    private val projectVersion = "1.0.2"
     private val baseUrl = "https://beta.api.henrikdev.xyz/valorant"
 
     private val client = HttpClient(OkHttp)

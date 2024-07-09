@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.calmwolfs.ktvalorantapi"
-version = "1.0.1"
+version = "1.0.2"
 
 repositories {
     mavenCentral()
@@ -19,7 +19,7 @@ repositories {
 dependencies {
     implementation(kotlin("stdlib"))
     implementation("com.google.code.gson:gson:2.11.0")
-    implementation("com.github.CalMWolfs:ValorantModelApi:1.2.3")
+    implementation("com.github.CalMWolfs:ValorantModelApi:1.2.4")
     implementation("io.ktor:ktor-client-core:2.3.12")
     implementation("io.ktor:ktor-client-okhttp:2.3.12")
     implementation("ch.qos.logback:logback-classic:1.5.3")
