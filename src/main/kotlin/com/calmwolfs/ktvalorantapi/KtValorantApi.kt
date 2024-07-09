@@ -43,6 +43,7 @@ class KtValorantApi(private val apiKey: String) {
      * @throws IOException If an error occurs while sending the request
      */
     @Throws(IOException::class)
+    @JvmOverloads
     fun getAccountDetails(playerName: PlayerName, force: Boolean = false): ValorantAccount {
         val params = if (force) mapOf("force" to "true") else mapOf()
         return sendRequest<ValorantAccount>("v2/account/${playerName.name}/${playerName.tag}", params)
@@ -57,6 +58,7 @@ class KtValorantApi(private val apiKey: String) {
      * @throws IOException If an error occurs while sending the request
      */
     @Throws(IOException::class)
+    @JvmOverloads
     fun getAccountDetailsById(playerId: String, force: Boolean = false): ValorantAccount {
         val params = if (force) mapOf("force" to "true") else mapOf()
         return sendRequest<ValorantAccount>("v2/by-puuid/account/$playerId", params)
@@ -74,6 +76,7 @@ class KtValorantApi(private val apiKey: String) {
      * @throws IOException If an error occurs while sending the request
      */
     @Throws(IOException::class)
+    @JvmOverloads
     fun getLeaderboard(
         region: Region,
         platform: Platform,
@@ -97,6 +100,7 @@ class KtValorantApi(private val apiKey: String) {
      * @throws IOException If an error occurs while sending the request
      */
     @Throws(IOException::class)
+    @JvmOverloads
     fun getLeaderboardByName(
         region: Region,
         platform: Platform,
@@ -121,6 +125,7 @@ class KtValorantApi(private val apiKey: String) {
      * @throws IOException If an error occurs while sending the request
      */
     @Throws(IOException::class)
+    @JvmOverloads
     fun getLeaderboardById(
         region: Region,
         platform: Platform,
@@ -149,6 +154,7 @@ class KtValorantApi(private val apiKey: String) {
      * @throws IOException If an error occurs while sending the request
      */
     @Throws(IOException::class)
+    @JvmOverloads
     fun getStoredMatches(
         region: Region,
         playerName: PlayerName,
@@ -177,6 +183,7 @@ class KtValorantApi(private val apiKey: String) {
      * @throws IOException If an error occurs while sending the request
      */
     @Throws(IOException::class)
+    @JvmOverloads
     fun getStoredMatchesById(
         region: Region,
         playerId: String,
@@ -200,6 +207,7 @@ class KtValorantApi(private val apiKey: String) {
      * @throws IOException If an error occurs while sending the request
      */
     @Throws(IOException::class)
+    @JvmOverloads
     fun getStoredMmrHistory(
         region: Region,
         playerName: PlayerName,
@@ -222,6 +230,7 @@ class KtValorantApi(private val apiKey: String) {
      * @throws IOException If an error occurs while sending the request
      */
     @Throws(IOException::class)
+    @JvmOverloads
     fun getStoredMmrHistoryById(
         region: Region,
         playerId: String,
@@ -244,6 +253,7 @@ class KtValorantApi(private val apiKey: String) {
      * @throws IOException If an error occurs while sending the request
      */
     @Throws(IOException::class)
+    @JvmOverloads
     fun getMmrHistory(region: Region, playerName: PlayerName, searchSize: SearchSize? = null): List<MmrHistory> {
         val params = searchSize?.params ?: mutableMapOf()
         return sendRequestList<MmrHistory>(
@@ -262,6 +272,7 @@ class KtValorantApi(private val apiKey: String) {
      * @throws IOException If an error occurs while sending the request
      */
     @Throws(IOException::class)
+    @JvmOverloads
     fun getMmrHistoryById(region: Region, playerId: String, searchSize: SearchSize? = null): List<MmrHistory> {
         val params = searchSize?.params ?: mutableMapOf()
         return sendRequestList<MmrHistory>("v1/by-puuid/mmr-history/${region.serializedName}/$playerId", params)
@@ -280,6 +291,7 @@ class KtValorantApi(private val apiKey: String) {
      * @throws IOException If an error occurs while sending the request
      */
     @Throws(IOException::class)
+    @JvmOverloads
     fun getMatches(
         region: Region,
         platform: Platform,
@@ -310,6 +322,7 @@ class KtValorantApi(private val apiKey: String) {
      * @throws IOException If an error occurs while sending the request
      */
     @Throws(IOException::class)
+    @JvmOverloads
     fun getMatchesById(
         region: Region,
         platform: Platform,
