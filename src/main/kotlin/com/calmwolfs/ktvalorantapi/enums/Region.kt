@@ -1,10 +1,6 @@
 package com.calmwolfs.ktvalorantapi.enums
 
-import com.google.gson.TypeAdapter
-import com.google.gson.stream.JsonReader
-import com.google.gson.stream.JsonWriter
-
-enum class Region(val serializedName: String, val prettyName: String) {
+enum class Region(val apiName: String, val prettyName: String) {
     ASIA_PACIFIC("ap", "Asia-Pacific"),
     BRAZIL("br", "Brazil"),
     EUROPE("eu", "Europe"),
@@ -19,17 +15,7 @@ enum class Region(val serializedName: String, val prettyName: String) {
 
     companion object {
         fun fromSerializedName(serializedName: String): Region {
-            return entries.first { it.serializedName == serializedName.lowercase() }
-        }
-
-        val typeAdapter: TypeAdapter<Region> = object : TypeAdapter<Region>() {
-            override fun write(writer: JsonWriter, value: Region) {
-                writer.value(value.serializedName)
-            }
-
-            override fun read(reader: JsonReader): Region {
-                return fromSerializedName(reader.nextString())
-            }
+            return entries.first { it.apiName == serializedName.lowercase() }
         }
     }
 }

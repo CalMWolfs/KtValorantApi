@@ -1,6 +1,9 @@
 package com.calmwolfs.ktvalorantapi.utils
 
 import com.calmwolfs.ktvalorantapi.datatypes.PlayerName
+import com.calmwolfs.ktvalorantapi.enums.Language
+import com.calmwolfs.ktvalorantapi.enums.Platform
+import com.calmwolfs.ktvalorantapi.enums.Region
 import com.calmwolfs.valorantmodelapi.enums.AgentType
 import com.calmwolfs.valorantmodelapi.enums.CompetitiveRankType
 import com.calmwolfs.valorantmodelapi.enums.GamemodeType
@@ -20,7 +23,6 @@ object TypeAdapters {
 
     fun GamemodeType.apiName() = name.lowercase().replace("_", "")
 
-    // todo these type adapters dont currently support reading them
     val agentTypeAdapter = SimpleTypeAdapter(AgentType::uuid) { AgentType.fromId(getId(this)) }
     val gamemodeTypeAdapter = SimpleTypeAdapter(GamemodeType::uuid) { GamemodeType.fromId(getId(this)) }
     val seasonTypeAdapter = SimpleTypeAdapter(SeasonType::uuid) { SeasonType.fromId(getId(this)) }
@@ -31,19 +33,9 @@ object TypeAdapters {
     val playerTitleTypeAdapter = SimpleTypeAdapter(PlayerTitleType::uuid) { PlayerTitleType.fromId(getId(this)) }
     val levelBorderTypeAdapter = SimpleTypeAdapter(LevelBorderType::uuid) { LevelBorderType.fromId(getId(this)) }
     val playerNameTypeAdapter = SimpleTypeAdapter(PlayerName::displayName) { PlayerName(this.nextString()) }
-
-    class SimpleTypeAdapter<T>(
-        val serializer: T.() -> String,
-        val deserializer: JsonReader.() -> T
-    ) : TypeAdapter<T>() {
-        override fun write(writer: JsonWriter, value: T) {
-            writer.value(value.serializer())
-        }
-
-        override fun read(reader: JsonReader): T {
-            return deserializer(reader)
-        }
-    }
+    val languageTypeAdapter = SimpleTypeAdapter(Language::localeUrl) { Language.fromLocaleUrl(this.nextString()) }
+    val regionTypeAdapter = SimpleTypeAdapter(Region::apiName) { Region.fromSerializedName(this.nextString()) }
+    val platformTypeAdapter = SimpleTypeAdapter(Platform::apiName) { Platform.fromSerializedName(this.nextString()) }
 
     private fun getId(reader: JsonReader): String? {
         val token = reader.peek()

@@ -1,6 +1,7 @@
 package com.calmwolfs.ktvalorantapi.utils
 
 import com.calmwolfs.ktvalorantapi.datatypes.PlayerName
+import com.calmwolfs.ktvalorantapi.enums.Language
 import com.calmwolfs.ktvalorantapi.enums.Platform
 import com.calmwolfs.ktvalorantapi.enums.Region
 import com.calmwolfs.valorantmodelapi.enums.AgentType
@@ -34,9 +35,10 @@ object GsonUtils {
             .registerTypeAdapter(PlayerCardType::class.java, TypeAdapters.playerCardTypeAdapter.nullSafe())
             .registerTypeAdapter(PlayerTitleType::class.java, TypeAdapters.playerTitleTypeAdapter.nullSafe())
             .registerTypeAdapter(LevelBorderType::class.java, TypeAdapters.levelBorderTypeAdapter.nullSafe())
-            .registerTypeAdapter(Region::class.java, Region.typeAdapter.nullSafe())
-            .registerTypeAdapter(Platform::class.java, Platform.typeAdapter.nullSafe())
+            .registerTypeAdapter(Region::class.java, TypeAdapters.regionTypeAdapter.nullSafe())
+            .registerTypeAdapter(Platform::class.java, TypeAdapters.platformTypeAdapter.nullSafe())
             .registerTypeAdapter(PlayerName::class.java, TypeAdapters.playerNameTypeAdapter.nullSafe())
+            .registerTypeAdapter(Language::class.java, TypeAdapters.languageTypeAdapter.nullSafe())
             .create()
     }
 

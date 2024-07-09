@@ -7,7 +7,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 data class QueueStatus(
-    // todo use enum
+    // todo use enum (aren't actual ids)
     val mode: String,
     @SerializedName("mode_id") val modeId: String,
     val enabled: Boolean,

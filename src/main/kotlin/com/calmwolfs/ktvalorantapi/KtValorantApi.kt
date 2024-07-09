@@ -99,7 +99,7 @@ class KtValorantApi(private val apiKey: String) {
         val params = searchSize?.params ?: mutableMapOf()
         season?.let { params["season_id"] = it.uuid }
 
-        return sendRequest<Leaderboard>("v3/leaderboard/${region.serializedName}/${platform.serializedName}", params)
+        return sendRequest<Leaderboard>("v3/leaderboard/${region.apiName}/${platform.apiName}", params)
     }
 
     /**
@@ -124,7 +124,7 @@ class KtValorantApi(private val apiKey: String) {
         params.putAll(playerName.params)
         season?.let { params["season_id"] = it.uuid }
 
-        return sendRequest<Leaderboard>("v3/leaderboard/${region.serializedName}/${platform.serializedName}", params)
+        return sendRequest<Leaderboard>("v3/leaderboard/${region.apiName}/${platform.apiName}", params)
     }
 
     /**
@@ -150,7 +150,7 @@ class KtValorantApi(private val apiKey: String) {
         season?.let { params["season_id"] = it.uuid }
 
         return sendRequest<Leaderboard>(
-            "v3/by-puuid/leaderboard/${region.serializedName}/${platform.serializedName}/$playerId",
+            "v3/by-puuid/leaderboard/${region.apiName}/${platform.apiName}/$playerId",
             params
         )
     }
@@ -179,7 +179,7 @@ class KtValorantApi(private val apiKey: String) {
         gameMode?.let { params["mode"] = it.apiName() }
         map?.let { params["map"] = it.displayName }
         return sendRequestList<StoredMatch>(
-            "v1/stored-matches/${region.serializedName}/${playerName.name}/${playerName.tag}",
+            "v1/stored-matches/${region.apiName}/${playerName.name}/${playerName.tag}",
             params
         )
     }
@@ -207,7 +207,7 @@ class KtValorantApi(private val apiKey: String) {
         val params = searchSize?.params ?: mutableMapOf()
         gameMode?.let { params["mode"] = it.apiName() }
         map?.let { params["map"] = it.displayName }
-        return sendRequestList<StoredMatch>("v1/by-puuid/stored-matches/${region.serializedName}/$playerId", params)
+        return sendRequestList<StoredMatch>("v1/by-puuid/stored-matches/${region.apiName}/$playerId", params)
     }
 
     /**
@@ -228,7 +228,7 @@ class KtValorantApi(private val apiKey: String) {
     ): List<StoredMmrHistory> {
         val params = searchSize.params
         return sendRequestList<StoredMmrHistory>(
-            "v1/stored-mmr-history/${region.serializedName}/${playerName.name}/${playerName.tag}",
+            "v1/stored-mmr-history/${region.apiName}/${playerName.name}/${playerName.tag}",
             params
         )
     }
@@ -251,7 +251,7 @@ class KtValorantApi(private val apiKey: String) {
     ): List<StoredMmrHistory> {
         val params = searchSize.params
         return sendRequestList<StoredMmrHistory>(
-            "v1/by-puuid/stored-mmr-history/${region.serializedName}/$playerId",
+            "v1/by-puuid/stored-mmr-history/${region.apiName}/$playerId",
             params
         )
     }
@@ -270,7 +270,7 @@ class KtValorantApi(private val apiKey: String) {
     fun getMmrHistory(region: Region, playerName: PlayerName, searchSize: SearchSize? = null): List<MmrHistory> {
         val params = searchSize?.params ?: mutableMapOf()
         return sendRequestList<MmrHistory>(
-            "v1/mmr-history/${region.serializedName}/${playerName.name}/${playerName.tag}",
+            "v1/mmr-history/${region.apiName}/${playerName.name}/${playerName.tag}",
             params
         )
     }
@@ -288,7 +288,7 @@ class KtValorantApi(private val apiKey: String) {
     @JvmOverloads
     fun getMmrHistoryById(region: Region, playerId: String, searchSize: SearchSize? = null): List<MmrHistory> {
         val params = searchSize?.params ?: mutableMapOf()
-        return sendRequestList<MmrHistory>("v1/by-puuid/mmr-history/${region.serializedName}/$playerId", params)
+        return sendRequestList<MmrHistory>("v1/by-puuid/mmr-history/${region.apiName}/$playerId", params)
     }
 
     /**
@@ -317,7 +317,7 @@ class KtValorantApi(private val apiKey: String) {
         gameMode?.let { params["mode"] = it.apiName() }
         map?.let { params["map"] = it.displayName }
         return sendRequestList<ValorantMatch>(
-            "v4/matches/${region.serializedName}/${platform.serializedName}/${playerName.name}/${playerName.tag}",
+            "v4/matches/${region.apiName}/${platform.apiName}/${playerName.name}/${playerName.tag}",
             params
         )
     }
@@ -348,7 +348,7 @@ class KtValorantApi(private val apiKey: String) {
         gameMode?.let { params["mode"] = it.apiName() }
         map?.let { params["map"] = it.displayName }
         return sendRequestList<ValorantMatch>(
-            "v4/by-puuid/matches/${region.serializedName}/${platform.serializedName}/$playerId",
+            "v4/by-puuid/matches/${region.apiName}/${platform.apiName}/$playerId",
             params
         )
     }
@@ -362,7 +362,7 @@ class KtValorantApi(private val apiKey: String) {
      * @throws IOException If an error occurs while sending the request
      */
     fun getMatchById(region: Region, matchId: String): ValorantMatch {
-        return sendRequest<ValorantMatch>("v4/match/${region.serializedName}/$matchId")
+        return sendRequest<ValorantMatch>("v4/match/${region.apiName}/$matchId")
     }
 
     /**
@@ -374,7 +374,7 @@ class KtValorantApi(private val apiKey: String) {
      */
     @Throws(IOException::class)
     fun getClientVersion(region: Region): ValorantVersion {
-        return sendRequest<ValorantVersion>("v1/version/${region.serializedName}")
+        return sendRequest<ValorantVersion>("v1/version/${region.apiName}")
     }
 
     /**
@@ -399,7 +399,7 @@ class KtValorantApi(private val apiKey: String) {
     @Throws(IOException::class)
     // todo when there is maintenance serialize the data
     fun getMaintenanceStatus(region: Region): JsonObject {
-        return sendRequest<JsonObject>("v1/status/${region.serializedName}")
+        return sendRequest<JsonObject>("v1/status/${region.apiName}")
     }
 
     /**
@@ -411,7 +411,7 @@ class KtValorantApi(private val apiKey: String) {
      */
     @Throws(IOException::class)
     fun getQueueStatus(region: Region): List<QueueStatus> {
-        return sendRequestList<QueueStatus>("v1/queue-status/${region.serializedName}")
+        return sendRequestList<QueueStatus>("v1/queue-status/${region.apiName}")
     }
 
     @Throws(IOException::class)

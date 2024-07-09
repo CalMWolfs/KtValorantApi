@@ -30,7 +30,6 @@ data class ValorantMatch(
 
 data class GameMetadata(
     @SerializedName("match_id") val matchId: String,
-    // todo change around
     val map: MapType,
     @SerializedName("game_version") val gameVersion: String,
     @SerializedName("game_length_in_ms") val gameLength: Int,
