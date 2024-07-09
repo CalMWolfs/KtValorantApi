@@ -1,5 +1,6 @@
 package com.calmwolfs.ktvalorantapi.utils
 
+import com.calmwolfs.ktvalorantapi.datatypes.PlayerName
 import com.calmwolfs.valorantmodelapi.enums.AgentType
 import com.calmwolfs.valorantmodelapi.enums.CompetitiveRankType
 import com.calmwolfs.valorantmodelapi.enums.GamemodeType
@@ -29,6 +30,7 @@ object TypeAdapters {
     val playerCardTypeAdapter = SimpleTypeAdapter(PlayerCardType::uuid) { PlayerCardType.fromId(getId(this)) }
     val playerTitleTypeAdapter = SimpleTypeAdapter(PlayerTitleType::uuid) { PlayerTitleType.fromId(getId(this)) }
     val levelBorderTypeAdapter = SimpleTypeAdapter(LevelBorderType::uuid) { LevelBorderType.fromId(getId(this)) }
+    val playerNameTypeAdapter = SimpleTypeAdapter(PlayerName::displayName) { PlayerName(this.nextString()) }
 
     class SimpleTypeAdapter<T>(
         val serializer: T.() -> String,

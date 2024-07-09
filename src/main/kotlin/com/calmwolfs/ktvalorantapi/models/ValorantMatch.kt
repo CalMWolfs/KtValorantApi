@@ -15,6 +15,7 @@ import com.calmwolfs.valorantmodelapi.enums.WeaponType
 import com.google.gson.JsonElement
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import java.util.Date
 
 data class ValorantMatch(
     val metadata: GameMetadata,
@@ -33,7 +34,7 @@ data class GameMetadata(
     val map: MapType,
     @SerializedName("game_version") val gameVersion: String,
     @SerializedName("game_length_in_ms") val gameLength: Int,
-    @SerializedName("started_at") val startedAt: Long,
+    @SerializedName("started_at") val startedAt: Date,
     @SerializedName("is_completed") val isCompleted: Boolean,
     val queue: QueueInfo,
     val season: SeasonType,

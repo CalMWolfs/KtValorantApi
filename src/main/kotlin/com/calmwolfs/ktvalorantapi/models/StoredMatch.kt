@@ -7,6 +7,7 @@ import com.calmwolfs.valorantmodelapi.enums.MapType
 import com.calmwolfs.valorantmodelapi.enums.SeasonType
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import java.util.Date
 
 data class StoredMatch(
     val meta: MapMetadata,
@@ -20,7 +21,7 @@ data class MapMetadata(
     val version: String,
     // todo enum for modes
     val mode: String,
-    @SerializedName("started_at") val startedAt: Long,
+    @SerializedName("started_at") val startedAt: Date,
     val season: SeasonType,
     val region: Region,
     val cluster: String,

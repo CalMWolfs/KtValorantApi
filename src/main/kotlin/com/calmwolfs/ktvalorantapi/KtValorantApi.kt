@@ -2,6 +2,7 @@ package com.calmwolfs.ktvalorantapi
 
 import com.calmwolfs.ktvalorantapi.datatypes.PlayerName
 import com.calmwolfs.ktvalorantapi.datatypes.SearchSize
+import com.calmwolfs.ktvalorantapi.enums.Language
 import com.calmwolfs.ktvalorantapi.enums.Platform
 import com.calmwolfs.ktvalorantapi.enums.Region
 import com.calmwolfs.ktvalorantapi.exceptions.AuthenticationException
@@ -30,7 +31,7 @@ import java.net.URL
 
 class KtValorantApi(private val apiKey: String) {
 
-    private val projectVersion = System.getProperty("project.version")
+    private val projectVersion = "1.0.1"
     private val baseUrl = "https://beta.api.henrikdev.xyz/valorant"
 
     /**
@@ -346,7 +347,7 @@ class KtValorantApi(private val apiKey: String) {
      * @throws IOException If an error occurs while sending the request
      */
     @Throws(IOException::class)
-    fun getValorantNews(language: com.calmwolfs.ktvalorantapi.enums.Language): List<ValorantNews> {
+    fun getValorantNews(language: Language): List<ValorantNews> {
         return sendRequestList<ValorantNews>("v1/website/${language.localeUrl}")
     }
 

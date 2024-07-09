@@ -5,9 +5,10 @@ import com.calmwolfs.valorantmodelapi.enums.PlayerCardType
 import com.calmwolfs.valorantmodelapi.enums.PlayerTitleType
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import java.util.Date
 
 data class Leaderboard(
-    @SerializedName("updated_at") val updatedAt: Long,
+    @SerializedName("updated_at") val updatedAt: Date,
     val thresholds: List<RankThreshold>,
     val players: List<LeaderboardPlayer>,
 )
@@ -29,6 +30,6 @@ data class LeaderboardPlayer(
     @Expose @SerializedName("leaderboard_rank") val leaderboardRank: Int,
     @Expose @SerializedName("rr") val rankedRating: Int,
     @Expose val wins: Int,
-    @Expose @SerializedName("updated_at") val updatedAt: Long,
+    @Expose @SerializedName("updated_at") val updatedAt: Date,
     @Expose @SerializedName("tier") val rank: CompetitiveRankType,
 )
