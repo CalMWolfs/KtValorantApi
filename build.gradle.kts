@@ -20,6 +20,9 @@ dependencies {
     implementation(kotlin("stdlib"))
     implementation("com.google.code.gson:gson:2.11.0")
     implementation("com.github.CalMWolfs:ValorantModelApi:1.2.3")
+    implementation("io.ktor:ktor-client-core:2.3.12")
+    implementation("io.ktor:ktor-client-okhttp:2.3.12")
+    implementation("ch.qos.logback:logback-classic:1.5.3")
 }
 
 kotlin {

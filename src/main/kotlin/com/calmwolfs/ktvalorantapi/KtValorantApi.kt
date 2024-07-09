@@ -25,14 +25,27 @@ import com.calmwolfs.valorantmodelapi.enums.GamemodeType
 import com.calmwolfs.valorantmodelapi.enums.MapType
 import com.calmwolfs.valorantmodelapi.enums.SeasonType
 import com.google.gson.JsonObject
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.okhttp.OkHttp
+import io.ktor.client.request.header
+import io.ktor.client.request.request
+import io.ktor.client.statement.HttpResponse
+import io.ktor.client.statement.bodyAsText
+import io.ktor.http.HttpMethod
+import io.ktor.http.HttpStatusCode
+import kotlinx.coroutines.runBlocking
 import java.io.IOException
-import java.net.HttpURLConnection
-import java.net.URL
 
 class KtValorantApi(private val apiKey: String) {
 
     private val projectVersion = "1.0.1"
     private val baseUrl = "https://beta.api.henrikdev.xyz/valorant"
+
+    private val client = HttpClient(OkHttp)
+
+    fun closeClient() {
+        client.close()
+    }
 
     /**
      * Get account details for a player by their name and tag.
@@ -390,27 +403,30 @@ class KtValorantApi(private val apiKey: String) {
     }
 
     @Throws(IOException::class)
-    private inline fun <reified T> sendRequest(requestPath: String, params: Map<String, String> = mapOf()): T {
+    private inline fun <reified T> sendRequest(
+        requestPath: String,
+        params: Map<String, String> = mapOf()
+    ): T = runBlocking {
         val responseJsonObject = getRawJsonResponse(requestPath, params)
-        return GsonUtils.gson.fromJson(responseJsonObject.getAsJsonObject("data"), T::class.java)
+        return@runBlocking GsonUtils.gson.fromJson(responseJsonObject.getAsJsonObject("data"), T::class.java)
     }
 
     @Throws(IOException::class)
     private inline fun <reified T> sendRequestList(
         requestPath: String,
         params: Map<String, String> = mapOf()
-    ): List<T> {
+    ): List<T> = runBlocking {
         val responseJsonObject = getRawJsonResponse(requestPath, params)
         val data = responseJsonObject.getAsJsonArray("data")
         val result = mutableListOf<T>()
         data.forEach {
             result.add(GsonUtils.gson.fromJson(it, T::class.java))
         }
-        return result
+        return@runBlocking result
     }
 
     @Throws(IOException::class)
-    private fun getRawJsonResponse(requestPath: String, params: Map<String, String> = mapOf()): JsonObject {
+    private suspend fun getRawJsonResponse(requestPath: String, params: Map<String, String> = mapOf()): JsonObject {
         val fixedPath = requestPath.replace(" ", "%20")
         val url = if (params.isEmpty()) {
             "$baseUrl/$fixedPath"
@@ -419,55 +435,58 @@ class KtValorantApi(private val apiKey: String) {
             "$baseUrl/$fixedPath?$parameters"
         }
 
-        val connection = URL(url).openConnection() as HttpURLConnection
         // todo remove println
-        println("connecting to $url")
+        println("Connecting to $url")
 
-        connection.requestMethod = "GET"
-        connection.setRequestProperty("Authorization", apiKey)
-        connection.setRequestProperty("User-Agent", "KtValorantApi/$projectVersion")
-
-        connection.connect()
-
-        when (val responseCode = connection.responseCode) {
-            200 -> Unit
-            429 -> {
-                val rateLimit = connection.getHeaderField("x-ratelimit-limit")
-                val rateLimitReset = connection.getHeaderField("x-ratelimit-reset")
-                throw RateLimitException(rateLimit, rateLimitReset)
+        try {
+            val response = client.request(url) {
+                method = HttpMethod.Get
+                header("Authorization", apiKey)
+                header("User-Agent", "KtValorantApi/$projectVersion")
             }
 
-            401, 403 -> {
-                throw AuthenticationException(connection.responseMessage)
+            when (response.status) {
+                HttpStatusCode.OK -> Unit
+                HttpStatusCode.TooManyRequests -> {
+                    val rateLimit = response.headers["x-ratelimit-limit"] ?: "Unknown"
+                    val rateLimitReset = response.headers["x-ratelimit-reset"] ?: "Unknown"
+                    throw RateLimitException(rateLimit, rateLimitReset)
+                }
+
+                HttpStatusCode.Unauthorized, HttpStatusCode.Forbidden -> {
+                    throw AuthenticationException(response.status.description)
+                }
+
+                HttpStatusCode.BadRequest -> {
+                    val (code, message) = getCodeAndMessage(response)
+                    throw InvalidRequestException(code, message)
+                }
+
+                HttpStatusCode.NotFound -> {
+                    val (code, message) = getCodeAndMessage(response)
+                    throw ResourceNotFoundException(code, message)
+                }
+
+                HttpStatusCode.InternalServerError -> {
+                    val (code, message) = getCodeAndMessage(response)
+                    throw InternalServerException(code, message)
+                }
+
+                else -> {
+                    throw IOException("Unknown error response code: ${response.status.value}")
+                }
             }
 
-            400 -> {
-                val (code, message) = getCodeAndMessage(connection)
-                throw InvalidRequestException(code, message)
-            }
-
-            404 -> {
-                val (code, message) = getCodeAndMessage(connection)
-                throw ResourceNotFoundException(code, message)
-            }
-
-            500 -> {
-                val (code, message) = getCodeAndMessage(connection)
-                throw InternalServerException(code, message)
-            }
-
-            else -> {
-                throw IOException("Unknown error response code: $responseCode")
-            }
+            val responseBody = response.bodyAsText()
+            return GsonUtils.gson.fromJson(responseBody, JsonObject::class.java)
+        } catch (e: Exception) {
+            throw IOException("Failed to fetch data from $url", e)
         }
-
-        val response = connection.inputStream.bufferedReader().use { it.readText() }
-        return GsonUtils.gson.fromJson(response, JsonObject::class.java)
     }
 
-    private fun getCodeAndMessage(connection: HttpURLConnection): Pair<Int, String> {
-        val response = connection.errorStream.bufferedReader().use { it.readText() }
-        val json = GsonUtils.gson.fromJson(response, JsonObject::class.java)
+    private fun getCodeAndMessage(response: HttpResponse): Pair<Int, String> {
+        val responseBody = runBlocking { response.bodyAsText() }
+        val json = GsonUtils.gson.fromJson(responseBody, JsonObject::class.java)
         val error = json.getAsJsonArray("errors")[0].asJsonObject
         return Pair(error.get("code").asInt, error.get("message").asString)
     }
