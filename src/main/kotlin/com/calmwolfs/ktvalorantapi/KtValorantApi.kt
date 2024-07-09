@@ -354,6 +354,18 @@ class KtValorantApi(private val apiKey: String) {
     }
 
     /**
+     * Get a match by its ID.
+     *
+     * @param region The region to get the match for.
+     * @param matchId The match ID.
+     * @return The match
+     * @throws IOException If an error occurs while sending the request
+     */
+    fun getMatchById(region: Region, matchId: String): ValorantMatch {
+        return sendRequest<ValorantMatch>("v4/match/${region.serializedName}/$matchId")
+    }
+
+    /**
      * Get the version of the Valorant Client for a region.
      *
      * @param region The region to get the version for.
@@ -480,7 +492,7 @@ class KtValorantApi(private val apiKey: String) {
             val responseBody = response.bodyAsText()
             return GsonUtils.gson.fromJson(responseBody, JsonObject::class.java)
         } catch (e: Exception) {
-            throw IOException("Failed to fetch data from $url", e)
+            throw IOException("Failed to fetch data from $url. ${e.message}", e)
         }
     }
 
